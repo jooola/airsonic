@@ -144,7 +144,7 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- connection pool manager, fixes #860 (external database performance) -->  
+        <!-- connection pool manager, fixes #860 (external database performance) -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-dbcp2</artifactId>
@@ -586,6 +586,32 @@
             <version>2.1.2</version>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.restdocs</groupId>
+            <artifactId>spring-restdocs-mockmvc</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.restdocs</groupId>
+            <artifactId>spring-restdocs-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -661,33 +687,58 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.owasp</groupId>
-                <artifactId>dependency-check-maven</artifactId>
+              <groupId>org.owasp</groupId>
+              <artifactId>dependency-check-maven</artifactId>
+          </plugin>
+          <plugin>
+              <groupId>net.nicoulaj.maven.plugins</groupId>
+              <artifactId>checksum-maven-plugin</artifactId>
+          </plugin>
+          <plugin>
+              <groupId>org.eclipse.jetty</groupId>
+              <artifactId>jetty-jspc-maven-plugin</artifactId>
+              <version>9.4.19.v20190610</version>
+              <executions>
+                  <execution>
+                      <id>jspc</id>
+                      <goals>
+                          <goal>jspc</goal>
+                      </goals>
+                      <phase>compile</phase>
+                      <configuration>
+                          <!-- Since we are using spring boot - we do not have a web.xml so there is no sense
+                          enabling merging. Furthermore, we output the webXmlFragment to the target/classes
+                          directory such that it will be on the classpath for use during runtime -->
+                          <mergeFragment>false</mergeFragment>
+                          <webXmlFragment>${project.build.outputDirectory}/precompiled-jsp-web.xml</webXmlFragment>
+                      </configuration>
+                  </execution>
+              </executions>
             </plugin>
             <plugin>
-                <groupId>net.nicoulaj.maven.plugins</groupId>
-                <artifactId>checksum-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-jspc-maven-plugin</artifactId>
-                <version>9.4.19.v20190610</version>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <version>1.5.3</version>
                 <executions>
                     <execution>
-                        <id>jspc</id>
+                        <id>generate-docs</id>
+                        <phase>prepare-package</phase>
                         <goals>
-                            <goal>jspc</goal>
+                            <goal>process-asciidoc</goal>
                         </goals>
-                        <phase>compile</phase>
                         <configuration>
-                            <!-- Since we are using spring boot - we do not have a web.xml so there is no sense
-                            enabling merging. Furthermore, we output the webXmlFragment to the target/classes
-                            directory such that it will be on the classpath for use during runtime -->
-                            <mergeFragment>false</mergeFragment>
-                            <webXmlFragment>${project.build.outputDirectory}/precompiled-jsp-web.xml</webXmlFragment>
+                            <backend>html</backend>
+                            <doctype>book</doctype>
                         </configuration>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.springframework.restdocs</groupId>
+                        <artifactId>spring-restdocs-asciidoctor</artifactId>
+                        <version>1.2.1.RELEASE</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
