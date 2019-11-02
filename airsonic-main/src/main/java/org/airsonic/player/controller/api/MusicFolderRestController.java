@@ -19,31 +19,37 @@
  */
 package org.airsonic.player.controller.api;
 
-import org.airsonic.player.dao.MediaFileDao;
-import org.airsonic.player.domain.Genre;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.airsonic.player.domain.MusicFolder;
+import org.airsonic.player.service.SecurityService;
+import org.airsonic.player.service.SettingsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import javax.servlet.http.HttpServletRequest;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api/v1/genres")
-public class GenreRESTController {
+@RequestMapping(value = "/api/v1/music-folders")
+public class MusicFolderRestController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(GenreRESTController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(MusicFolderRestController.class);
 
-    @Autowired
-    private MediaFileDao mediaFileDao;
+	@Autowired
+	private SettingsService settingsService;
+	@Autowired
+	private SecurityService securityService;
 
-    @GetMapping
-    public ResponseEntity<List<Genre>> getGenres(HttpServletRequest request) throws Exception {
-        return ResponseEntity.ok(mediaFileDao.getGenres(false));
-    }
+	@GetMapping
+	public ResponseEntity<List<MusicFolder>> getMusicFolders(HttpServletRequest request) throws Exception {
+		String username = this.securityService.getCurrentUsername(request);
+		List<MusicFolder> musicFoldersForUser = this.settingsService.getMusicFoldersForUser(username);
+
+		return ResponseEntity.ok(musicFoldersForUser);
+	}
 }
