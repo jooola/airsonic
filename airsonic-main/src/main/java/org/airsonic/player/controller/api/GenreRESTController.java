@@ -42,7 +42,7 @@ public class GenreRESTController {
     @Autowired
     private MediaFileDao mediaFileDao;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<List<Genre>> getGenres(HttpServletRequest request) throws Exception {
         return ResponseEntity.ok(mediaFileDao.getGenres(false));
     }

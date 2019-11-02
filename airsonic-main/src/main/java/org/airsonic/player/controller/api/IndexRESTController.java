@@ -13,7 +13,7 @@ public class IndexRESTController {
 
     private static final Logger LOG = LoggerFactory.getLogger(IndexRESTController.class);
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<Void> index() {
         return ResponseEntity.noContent().build();
     }

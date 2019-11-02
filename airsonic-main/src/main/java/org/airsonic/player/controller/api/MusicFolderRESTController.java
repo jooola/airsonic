@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/api/musicFolders")
+@RequestMapping(value = "/api/music-folders")
 public class MusicFolderRESTController {
 
     private static final Logger LOG = LoggerFactory.getLogger(MusicFolderRESTController.class);
@@ -45,7 +45,7 @@ public class MusicFolderRESTController {
     @Autowired
     private SecurityService securityService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public ResponseEntity<List<MusicFolder>> getMusicFolders(HttpServletRequest request) throws Exception {
         String username = securityService.getCurrentUsername(request);
         List<MusicFolder> musicFoldersForUser = settingsService.getMusicFoldersForUser(username);
