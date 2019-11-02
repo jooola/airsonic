@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/api/music-folders")
+@RequestMapping(value = "/api/v1/music-folders")
 public class MusicFolderRESTController {
 
     private static final Logger LOG = LoggerFactory.getLogger(MusicFolderRESTController.class);

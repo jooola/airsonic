@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/api/genres")
+@RequestMapping(value = "/api/v1/genres")
 public class GenreRESTController {
 
     private static final Logger LOG = LoggerFactory.getLogger(GenreRESTController.class);

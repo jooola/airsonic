@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api/v1")
 public class IndexRESTController {
 
     private static final Logger LOG = LoggerFactory.getLogger(IndexRESTController.class);
@@ -19,5 +19,4 @@ public class IndexRESTController {
     	// Or simply return 404, since the api itself isn't really a ressource.
         return ResponseEntity.noContent().build();
     }
-
 }
