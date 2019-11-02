@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/v1/music-folders")
 public class MusicFolderRESTController {
 

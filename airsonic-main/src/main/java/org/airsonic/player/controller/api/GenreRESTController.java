@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(value = "/api/v1/genres")
 public class GenreRESTController {
 
