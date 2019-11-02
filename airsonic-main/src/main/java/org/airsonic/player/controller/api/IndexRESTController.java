@@ -15,6 +15,8 @@ public class IndexRESTController {
 
     @GetMapping
     public ResponseEntity<Void> index() {
+    	// TODO: Write proper root api response, with links to documentation or links to others root endpoint (HATEOAS).
+    	// Or simply return 404, since the api itself isn't really a ressource.
         return ResponseEntity.noContent().build();
     }
 
